@@ -40,8 +40,8 @@ app.listen(5000, function () { console.log('listening on 5000'); });
                 if (req.body.action === "insert" || (req.body.action === "batch" && req.body.added && req.body.added.length > 0)) {
                     (req.body.action === "insert") ? eventData.push(req.body.value) : eventData = req.body.added;
                     for (let a = 0; a < eventData.length; a++) {
-                        eventData[a].StartTime = eventData[a].StartTime instanceof Date ? eventData[a].StartTime.toISOString() : eventData[a].StartTime;
-                        eventData[a].EndTime = eventData[a].EndTime instanceof Date ? eventData[a].EndTime.toISOString() : eventData[a].EndTime;
+                        eventData[a].StartTime = new Date(eventData[a].StartTime);
+                        eventData[a].EndTime = new Date(eventData[a].EndTime);
                         await dbo.collection('ScheduleData').insertOne(eventData[a]);
                     }
                 }
@@ -49,8 +49,8 @@ app.listen(5000, function () { console.log('listening on 5000'); });
                     (req.body.action === "update") ? eventData.push(req.body.value) : eventData = req.body.changed;
                     for (let b = 0; b < eventData.length; b++) {
                         delete eventData[b]._id;
-                        eventData[b].StartTime = eventData[b].StartTime instanceof Date ? eventData[b].StartTime.toISOString() : eventData[b].StartTime,
-                        eventData[b].EndTime = eventData[b].EndTime instanceof Date ? eventData[b].EndTime.toISOString() : eventData[b].EndTime,
+                        eventData[b].StartTime = new Date(eventData[b].StartTime);
+                        eventData[b].EndTime = new Date(eventData[b].EndTime);
                         await dbo.collection('ScheduleData').updateOne({ "Id": eventData[b].Id }, { $set: eventData[b] });
                     }
                 }
