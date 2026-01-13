@@ -1,6 +1,6 @@
+var MongoClient = require('mongodb').MongoClient;
 var express = require('express');
 var cors = require('cors');
-var { MongoClient } = require('mongodb');
 var app = express();
 var url = "mongodb://localhost:27017/";
 
@@ -15,7 +15,6 @@ app.use(cors({
     credentials: false // set to true ONLY if you use cookies/Authorization with cross-origin
 }));
 
-app.options('*', cors());
 app.use(express.static(__dirname));
 app.listen(5000, function () { console.log('listening on 5000'); });
 
